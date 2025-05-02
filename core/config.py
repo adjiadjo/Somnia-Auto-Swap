@@ -15,10 +15,9 @@ MIN_NATIVE_BALANCE = 0.0001
 SWAP_PERCENTAGE = 0.3
 
 SOMNIA_TOKENS = {
+    "STT": {"address": None, "decimals": 18},
     "TOK1": {"address": Web3.to_checksum_address("0xdc07E5Cc79140551da92A2Bc2E6D31530B9c2dCA"), "decimals": 18},
     "USDT.g": {"address": Web3.to_checksum_address("0xDa4FDE38bE7a2b959BF46E032ECfA21e64019b76"), "decimals": 18},
-    "TOK2": {"address": Web3.to_checksum_address("0x6B5825E92e003B63c77a45BB83C329d36a268Dd0"), "decimals": 18},
-    "STT": {"address": None, "decimals": 18},
 }
 
 ERC20_ABI = '[{"constant":true,"inputs":[{"name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"amount","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},{"name":"spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"type":"function"}]'
