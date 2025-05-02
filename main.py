@@ -2,7 +2,7 @@ import time
 import random
 from web3 import Web3
 from eth_account import Account
-from core.config import RPC_URL, ROUTER_ADDRESS, ROUTER_ABI, BASE_TOKEN, GTE_TOKENS
+from core.config import RPC_URL, ROUTER_ADDRESS, ROUTER_ABI, BASE_TOKEN, SOMNIA_TOKENS
 from core.utils.utils import print_header, get_private_key, show_balances, get_token_balance
 from core.swap.swap import swap
 
@@ -26,7 +26,7 @@ def main():
         return
 
     swap_fraction = percent / 100
-    tokens = [k for k in GTE_TOKENS if k != BASE_TOKEN]
+    tokens = [k for k in SOMNIA_TOKENS if k != BASE_TOKEN]
 
     for i in range(rounds):
         print(f"\n🔁 SWAP PUTARAN KE-{i+1}")
