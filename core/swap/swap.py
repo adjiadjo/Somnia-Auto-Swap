@@ -32,7 +32,7 @@ def swap(web3, account, router, token_in, token_out, amount_decimal):
 
             if token_in == BASE_TOKEN:
                 path = [
-                    Web3.to_checksum_address(SOMNIA_TOKENS["WETH"]["address"]),
+                    Web3.to_checksum_address(SOMNIA_TOKENS["WSTT"]["address"]),
                     Web3.to_checksum_address(token_out_data["address"])
                 ]
                 tx = router.functions.swapExactETHForTokens(
@@ -51,7 +51,7 @@ def swap(web3, account, router, token_in, token_out, amount_decimal):
                 approve(web3, account, token_in_data["address"], amount_in)
                 path = [
                     Web3.to_checksum_address(token_in_data["address"]),
-                    Web3.to_checksum_address(SOMNIA_TOKENS["WETH"]["address"])
+                    Web3.to_checksum_address(SOMNIA_TOKENS["WSTT"]["address"])
                 ]
                 tx = router.functions.swapExactTokensForETH(
                     amount_in,
@@ -69,7 +69,7 @@ def swap(web3, account, router, token_in, token_out, amount_decimal):
                 approve(web3, account, token_in_data["address"], amount_in)
                 path = [
                     Web3.to_checksum_address(token_in_data["address"]),
-                    Web3.to_checksum_address(SOMNIA_TOKENS["WETH"]["address"]),
+                    Web3.to_checksum_address(SOMNIA_TOKENS["WSTT"]["address"]),
                     Web3.to_checksum_address(token_out_data["address"])
                 ]
                 tx = router.functions.swapExactTokensForTokens(
