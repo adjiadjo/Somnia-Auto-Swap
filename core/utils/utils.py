@@ -37,6 +37,7 @@ def get_private_key():
 def get_token_balance(web3, account, symbol):
     data = SOMNIA_TOKENS[symbol]
     if symbol == BASE_TOKEN:
+        # For native token (STT), directly check balance via web3.eth.get_balance
         balance = web3.eth.get_balance(account.address)
     else:
         contract = web3.eth.contract(address=Web3.to_checksum_address(data["address"]), abi=ERC20_ABI)
