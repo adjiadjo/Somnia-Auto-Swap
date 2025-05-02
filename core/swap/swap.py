@@ -5,9 +5,10 @@ from ..config import SOMNIA_TOKENS, BASE_TOKEN, ROUTER_ADDRESS, ERC20_ABI, ROUTE
 
 def approve(web3, account, token_address, amount):
     contract = web3.eth.contract(address=Web3.to_checksum_address(token_address), abi=ERC20_ABI)
+    nonce = web3.eth.get_transaction_count(account.address, 'pending')  # use pending nonce
     tx = contract.functions.approve(ROUTER_ADDRESS, amount).build_transaction({
         'from': account.address,
-        'nonce': web3.eth.get_transaction_count(account.address),
+        'nonce': nonce,
         'gas': 100000,
         'gasPrice': int(web3.eth.gas_price * GAS_MULTIPLIER)
     })
@@ -21,14 +22,13 @@ def swap(web3, account, router, token_in, token_out, amount_decimal):
     deadline = int(time.time()) + 1800
     amount_in = int(amount_decimal * (10 ** token_in_data["decimals"]))
     amount_out_min = 0
-    
+
     max_retries = 3
     retry_count = 0
     while retry_count < max_retries:
         try:
+            # Always get the latest pending nonce
             nonce = web3.eth.get_transaction_count(account.address, 'pending')
-            if retry_count > 0:
-                nonce += 1
 
             if token_in == BASE_TOKEN:
                 path = [
@@ -90,13 +90,14 @@ def swap(web3, account, router, token_in, token_out, amount_decimal):
             print(f"[→] SWAP {token_in} → {token_out} = {amount_decimal:.6f} {token_in}")
             receipt = web3.eth.wait_for_transaction_receipt(tx_hash)
             return receipt
+
         except Exception as e:
             if "nonce too low" in str(e).lower() or "already known" in str(e).lower():
                 retry_count += 1
                 print(f"[!] Mencoba ulang transaksi ({retry_count}/{max_retries})...")
-                time.sleep(2)
+                time.sleep(3)
                 continue
             print(f"[!] Error: {str(e)}")
             raise e
-    
+
     raise Exception("Gagal melakukan swap setelah beberapa kali percobaan. Silakan coba lagi nanti.")
